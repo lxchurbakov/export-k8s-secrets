@@ -6,6 +6,7 @@ const exec = require('@actions/exec');
     let output = '';
 
     await exec.exec('kubectl get secret expat-forum-v2-secret -o jsonpath="{.data}"', [], {
+        silent: true,
         listeners: {
             stdout: (data) => {
                 output += data.toString();
@@ -13,7 +14,15 @@ const exec = require('@actions/exec');
         }
     });
 
-    console.log(output);
+    const secret = JSON.parse(output);
+
+    Object.keys(secret).forEach(key => {
+        core.exportVariable(key, secret[key]);
+    });
+
+    
+
+    // console.log(output);
 })();
 
 // const exec = require('@actions/exec');
