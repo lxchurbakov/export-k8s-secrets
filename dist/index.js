@@ -10994,12 +10994,8 @@ const exec = __nccwpck_require__(1514);
     const secret = JSON.parse(output);
 
     Object.keys(secret).forEach(key => {
-        core.exportVariable(key, secret[key]);
+        core.exportVariable(key, new Buffer(secret[key], 'base64').toString('ascii'));
     });
-
-    
-
-    // console.log(output);
 })();
 
 // const exec = require('@actions/exec');
