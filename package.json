@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npx ncc index.js -o dist/index.js"
+    "build": "rm dist/index.js && npx ncc build index.js -o dist"
   },
   "repository": {
     "type": "git",

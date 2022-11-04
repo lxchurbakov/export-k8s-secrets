@@ -9507,6 +9507,14 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 9526:
+/***/ ((module) => {
+
+module.exports = eval("require")("@actions/exec");
+
+
+/***/ }),
+
 /***/ 2877:
 /***/ ((module) => {
 
@@ -9686,19 +9694,52 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
+const exec = __nccwpck_require__(9526);
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
-}
+;(async () => {
+    let output = '';
+
+    await exec.exec('kubectl get secret expat-forum-v2-secret -o jsonpath="{.data}"', [], {
+        listeners: {
+            stdout: (data) => {
+                output += data.toString();
+            },
+        }
+    });
+
+    console.log(output);
+})();
+
+// const exec = require('@actions/exec');
+
+// let myOutput = '';
+// let myError = '';
+
+// const options = {};
+// options.listeners = {
+//   stdout: (data: Buffer) => {
+//     myOutput += data.toString();
+//   },
+//   stderr: (data: Buffer) => {
+//     myError += data.toString();
+//   }
+// };
+// options.cwd = './lib';
+
+// await exec.exec('node', ['index.js', 'foo=bar'], options);
+
+// try {
+//   // `who-to-greet` input defined in action metadata file
+//   const nameToGreet = core.getInput('who-to-greet');
+//   console.log(`Hello ${nameToGreet}!`);
+//   const time = (new Date()).toTimeString();
+//   core.setOutput("time", time);
+//   // Get the JSON webhook payload for the event that triggered the workflow
+//   const payload = JSON.stringify(github.context.payload, undefined, 2)
+//   console.log(`The event payload: ${payload}`);
+// } catch (error) {
+//   core.setFailed(error.message);
+// }
 })();
 
 module.exports = __webpack_exports__;
