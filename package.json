@@ -2,7 +2,6 @@
   "name": "export-k8s-secrets",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
   "scripts": {
     "build": "npx ncc index.js -o dist/index.js"
   },
