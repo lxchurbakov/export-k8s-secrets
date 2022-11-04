@@ -16,7 +16,6 @@ const exec = require('@actions/exec');
     console.log(output);
 })();
 
-
 // const exec = require('@actions/exec');
 
 // let myOutput = '';
